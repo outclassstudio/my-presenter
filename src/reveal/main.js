@@ -55,17 +55,34 @@ export default function Main() {
   }, []);
 
   return (
-    <MainContainer className="reveal" ref={deckDivRef}>
-      <div className="slides">
-        {slideData.map((el, idx) => (
-          <Section key={idx}>{el}</Section>
-        ))}
-      </div>
+    <MainContainer>
+      <RevealContainer className="reveal" ref={deckDivRef}>
+        <div className="slides">
+          {slideData.map((el, idx) => (
+            <Section
+              key={idx}
+              data-background-image={`${el.background}`}
+              data-transition={`${el.trainsition}`}
+              data-autoslide={`${el.slideTime}`}
+            >
+              {el.subtitle}
+            </Section>
+          ))}
+        </div>
+      </RevealContainer>
     </MainContainer>
   );
 }
 
 const MainContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RevealContainer = styled.div`
   width: 1920px;
   height: 1080px;
 `;
