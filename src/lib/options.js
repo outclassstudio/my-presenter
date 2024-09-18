@@ -1,5 +1,5 @@
 export const transitions = [
-  "side",
+  "slide",
   "fade",
   "slide-in fade-out",
   "fade-in slide-out",
