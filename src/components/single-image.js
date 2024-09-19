@@ -4,40 +4,26 @@ import useDataStore from "../data/store";
 import { useState } from "react";
 import { DefaultButton } from "../style/button-style";
 
-export default function SingleImage({ src, id, preview, setPreview }) {
-  const [background, setBackground] = useState(src);
-  const [transition, setTranstion] = useState("slide");
-  const [slideTime, setSlideTime] = useState(5000);
+export default function SingleImage({ data }) {
+  const [background, setBackground] = useState(data.background);
+  const [transition, setTranstion] = useState(data.transition);
+  const [slideTime, setSlideTime] = useState(data.slideTime);
   const [subtitle, setSubtitle] = useState("");
-  const { array, addArray, updateArray, deleteArray } = useDataStore();
-  const isDisabled = Boolean(array.find((el) => el.id === id));
-
-  const handleAdd = () => {
-    const data = {
-      id,
-      background,
-      transition,
-      slideTime,
-      subtitle,
-    };
-    addArray(data);
-  };
+  const { updateArray, deleteArray } = useDataStore();
 
   const handleUpdate = () => {
-    const data = {
-      id,
+    const updataData = {
+      id: data.id,
       background,
       transition,
       slideTime,
       subtitle: "",
     };
-    updateArray(data);
+    updateArray(updataData);
   };
 
   const handleDelete = () => {
-    deleteArray(id);
-    const newPreview = preview.filter((_, idx) => idx !== id);
-    setPreview(newPreview);
+    deleteArray(data.id);
   };
 
   const handleTransitionChange = (e) => {
@@ -54,7 +40,7 @@ export default function SingleImage({ src, id, preview, setPreview }) {
 
   return (
     <SingleImageContainer>
-      <Image src={src} />
+      <Thumbnail src={background} />
       <SelectWrapper>
         <span>전환효과</span>
         <select onChange={handleTransitionChange}>
@@ -64,7 +50,7 @@ export default function SingleImage({ src, id, preview, setPreview }) {
         </select>
       </SelectWrapper>
       <SelectWrapper>
-        <span>지속시간 ms</span>
+        <span>지속시간(ms)</span>
         <input
           type="number"
           value={slideTime}
@@ -76,15 +62,6 @@ export default function SingleImage({ src, id, preview, setPreview }) {
         <input type="text" value={subtitle} onChange={handleSubtitleChange} />
       </SelectWrapper>
       <ButtonWrapper>
-        <DefaultButton
-          width={"50px"}
-          height={"30px"}
-          background={"#363636"}
-          disabled={isDisabled}
-          onClick={handleAdd}
-        >
-          추가
-        </DefaultButton>
         <DefaultButton
           width={"50px"}
           height={"30px"}
@@ -110,7 +87,6 @@ const SingleImageContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 10px;
 
   span {
     font-weight: bold;
@@ -130,8 +106,9 @@ const SingleImageContainer = styled.div`
   }
 `;
 
-const Image = styled.img`
+const Thumbnail = styled.img`
   width: 100%;
+  aspect-ratio: 16/9;
 `;
 
 const SelectWrapper = styled.div`

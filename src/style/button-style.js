@@ -18,7 +18,8 @@ export const DefaultButton = styled.button`
   font-weight: bold;
   /* font-size: 16px; */
 
-  :disabled {
-    background: white;
+  &:disabled {
+    background: #949494;
+    cursor: not-allowed;
   }
 `;
