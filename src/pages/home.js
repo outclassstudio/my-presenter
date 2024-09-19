@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SingleImage from "../components/single-image";
 import useDataStore from "../data/store";
+import { DefaultButton } from "../style/button-style";
 // import { getUploadUrl } from "../apis/images";
 
 export default function Home() {
-  const [images, setImages] = useState();
   const [preview, setPreview] = useState();
   const navigate = useNavigate();
   const store = useDataStore((state) => state.array);
@@ -48,17 +48,47 @@ export default function Home() {
   return (
     <MainContainer>
       <div>my presenter</div>
-      {store.length ? <button onClick={handlePresentOn}>재생</button> : ""}
-      <FileForm onSubmit={handleImageUpload}>
-        <input type="file" multiple onChange={handleImageSelect} />
-        {/* <button>이미지 추가</button> */}
-      </FileForm>
+      <FormWrapper>
+        <div className="title">⚒️실행도구</div>
+        <FileForm onSubmit={handleImageUpload}>
+          <AddImageButton htmlFor="photo">
+            이미지추가
+            <ImageInput
+              id="photo"
+              type="file"
+              multiple
+              onChange={handleImageSelect}
+            />
+          </AddImageButton>
+          {store.length ? (
+            <DefaultButton
+              width={"100px"}
+              height={"35px"}
+              fontSize={"16px"}
+              background={"#12c763"}
+              onClick={handlePresentOn}
+            >
+              재생하기
+            </DefaultButton>
+          ) : (
+            ""
+          )}
+        </FileForm>
+        {store.length ? <div>추가된 파일 {store.length}</div> : ""}
+      </FormWrapper>
       <PreviewContainer>
         {preview
-          ? preview.map((url, idx) => <SingleImage key={idx} src={url} />)
+          ? preview.map((url, idx) => (
+              <SingleImage
+                key={idx}
+                src={url}
+                id={idx}
+                preview={preview}
+                setPreview={setPreview}
+              />
+            ))
           : ""}
       </PreviewContainer>
-      {store.length ? <div>추가된 파일{store.length}</div> : ""}
     </MainContainer>
   );
 }
@@ -72,9 +102,46 @@ const MainContainer = styled.div`
   gap: 10px;
 `;
 
-const FileForm = styled.form`
+const FormWrapper = styled.div`
+  margin: 10px;
+  border: 1px dashed;
+  padding: 10px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
+
+  div {
+    &.title {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+`;
+
+const FileForm = styled.form`
+  display: flex;
+  gap: 10px;
+`;
+
+const AddImageButton = styled.label`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 25px;
+  background: #363636;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 16px;
+`;
+
+const ImageInput = styled.input`
+  display: none;
 `;
 
 const PreviewContainer = styled.div`

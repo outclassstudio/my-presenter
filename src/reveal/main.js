@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Reveal from "reveal.js";
 import "reveal.js/dist/reveal.css";
 import "reveal.js/dist/theme/black.css";
 import styled from "styled-components";
-import { slideData } from "../data/data";
 import useDataStore from "../data/store";
 
 export default function Main() {
@@ -11,7 +10,6 @@ export default function Main() {
   const deckRef = useRef(null);
   const documentRef = useRef(document);
   const store = useDataStore((state) => state.array);
-  console.log(store);
 
   const simulateFKeyPress = () => {
     const fullScreenEvent = new KeyboardEvent("keydown", {
@@ -69,7 +67,7 @@ export default function Main() {
               data-autoslide={`${el.slideTime}`}
               data-background-transition={`${el.transition}`}
             >
-              {el.subtitle}
+              <InSection>{el.subtitle}</InSection>
             </Section>
           ))}
           <Section>슬라이드쇼가 끝났습니다.</Section>
@@ -93,7 +91,22 @@ const RevealContainer = styled.div`
 `;
 
 const Section = styled.section`
-  font-size: 100px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
 `;
 
-const Image = styled.img``;
+const InSection = styled.div`
+  margin-top: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: black;
+  opacity: 0.9;
+  font-size: 40px;
+  width: 100%;
+  font-family: "Hanna";
+`;
+
+// const Image = styled.img``;
