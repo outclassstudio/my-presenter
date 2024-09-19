@@ -97,14 +97,14 @@ const Section = styled.section`
 `;
 
 const InSection = styled.div`
-  margin-top: 600px;
+  margin-top: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
   background-color: black;
-  opacity: 0.9;
-  font-size: 40px;
+  opacity: 0.85;
+  font-size: 30px;
   width: 100%;
   font-family: "Hanna";
 `;

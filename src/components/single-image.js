@@ -17,7 +17,7 @@ export default function SingleImage({ data }) {
       background,
       transition,
       slideTime,
-      subtitle: "",
+      subtitle,
     };
     updateArray(updataData);
   };
