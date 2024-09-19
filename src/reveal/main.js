@@ -9,7 +9,7 @@ export default function Main() {
   const deckDivRef = useRef(null);
   const deckRef = useRef(null);
   const documentRef = useRef(document);
-  const store = useDataStore((state) => state.array);
+  const { videoData } = useDataStore();
 
   const simulateFKeyPress = () => {
     const fullScreenEvent = new KeyboardEvent("keydown", {
@@ -59,7 +59,7 @@ export default function Main() {
     <MainContainer>
       <RevealContainer className="reveal" ref={deckDivRef}>
         <div className="slides">
-          {store.map((el, idx) => (
+          {videoData.map((el, idx) => (
             <Section
               key={idx}
               data-background-image={`${el.background}`}

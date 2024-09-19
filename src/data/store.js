@@ -1,20 +1,21 @@
 import { create } from "zustand";
 
 const useDataStore = create((set) => ({
-  array: [],
+  videoData: [],
   addArray: (data) =>
     set((state) => ({
-      array: [...state.array, data],
+      videoData: [...state.videoData, data],
     })),
   updateArray: (data) =>
     set((state) => ({
-      array: [...state.array.filter((el) => el.id !== data.id), data].sort(
-        (a, b) => a.id - b.id
-      ),
+      videoData: [
+        ...state.videoData.filter((el) => el.id !== data.id),
+        data,
+      ].sort((a, b) => a.id - b.id),
     })),
   deleteArray: (id) =>
     set((state) => ({
-      array: [...state.array.filter((el) => el.id !== id)],
+      videoData: [...state.videoData.filter((el) => el.id !== id)],
     })),
 }));
 
