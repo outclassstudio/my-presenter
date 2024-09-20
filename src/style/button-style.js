@@ -22,4 +22,12 @@ export const DefaultButton = styled.button`
     background: #949494;
     cursor: not-allowed;
   }
+
+  &:hover {
+    background: ${(props) => props.hover};
+  }
+
+  &:active {
+    background: ${(props) => props.active};
+  }
 `;

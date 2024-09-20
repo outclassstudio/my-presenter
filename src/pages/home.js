@@ -4,9 +4,12 @@ import SingleImage from "../components/single-image";
 import useDataStore from "../data/store";
 import { DefaultButton } from "../style/button-style";
 import SequenceImage from "../components/sequence-image";
-// import { getUploadUrl } from "../apis/images";
+import AddSubtitlesModal from "../components/add-subtitles-modal";
+import { useState } from "react";
+import { formatToMin } from "../lib/utils";
 
 export default function Home() {
+  const [isSubtitleModalOpen, setIsSubtitleModalOpen] = useState(false);
   const navigate = useNavigate();
   const { videoData, addArray } = useDataStore();
   let slideTime = 0;
@@ -15,7 +18,7 @@ export default function Home() {
       slideTime += Number(videoData[i].slideTime);
     }
   }
-  console.log(videoData);
+  // console.log(videoData);
 
   const handlePresentOn = () => {
     navigate("/reveal");
@@ -24,25 +27,18 @@ export default function Home() {
   const handleImageSelect = async (e) => {
     const files = e.target.files;
 
-    // const { success, result } = await getUploadUrl();
-    // if (success) {
-    //   const { id, uploadURL } = result;
-    //   console.log(id, uploadURL);
-    // }
-
     for (let i = 0; i < files.length; i++) {
       const background = URL.createObjectURL(files[i]);
       let id = i;
       if (videoData.length) {
         const [last] = videoData.slice(-1);
-        console.log(last);
         const lastID = last.id + i + 1;
         id = lastID;
       }
       const data = {
         id,
         background,
-        transition: "slide",
+        transition: "none",
         slideTime: 5000,
         subtitle: "",
       };
@@ -54,8 +50,17 @@ export default function Home() {
     e.preventDefault();
   };
 
+  const handleModalOpen = () => {
+    setIsSubtitleModalOpen((prev) => !prev);
+  };
+
   return (
     <MainContainer>
+      {isSubtitleModalOpen ? (
+        <AddSubtitlesModal handleModalOpen={handleModalOpen} />
+      ) : (
+        ""
+      )}
       <Header>
         <div className="main">Outclass</div>
         <div className="sub">Video Generator</div>
@@ -72,15 +77,9 @@ export default function Home() {
               onChange={handleImageSelect}
             />
           </AddImageButton>
-          <AddImageButton htmlFor="subtitle">
+          <AddSubtitleButton onClick={handleModalOpen}>
             자막추가
-            <ImageInput
-              id="subtitle"
-              type="file"
-              multiple
-              // onChange={handleImageSelect}
-            />
-          </AddImageButton>
+          </AddSubtitleButton>
           {videoData.length ? (
             <DefaultButton
               width={"100px"}
@@ -105,7 +104,7 @@ export default function Home() {
             ))}
           </PreloadWrapper>
           <div className="expected">
-            ⚙예상소요시간: {slideTime ? slideTime : ""}ms
+            ⚙예상소요시간: {slideTime ? formatToMin(slideTime) : ""}
           </div>
         </FormWrapper>
       ) : (
@@ -185,6 +184,23 @@ const FileForm = styled.form`
 `;
 
 const AddImageButton = styled.label`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 25px;
+  background: #363636;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 16px;
+`;
+
+const AddSubtitleButton = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

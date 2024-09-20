@@ -17,6 +17,10 @@ const useDataStore = create((set) => ({
     set((state) => ({
       videoData: [...state.videoData.filter((el) => el.id !== id)],
     })),
+  updateSubs: (data) =>
+    set(() => ({
+      videoData: data,
+    })),
 }));
 
 export default useDataStore;
