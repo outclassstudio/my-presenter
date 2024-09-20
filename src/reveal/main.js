@@ -60,17 +60,29 @@ export default function Main() {
       <RevealContainer className="reveal" ref={deckDivRef}>
         <div className="slides">
           <Section data-autoslide="4500">슬라이드쇼가 시작됩니다.</Section>
-          {videoData.map((el, idx) => (
-            <Section
-              key={idx}
-              data-background-image={`${el.background}`}
-              data-transition={`${el.transition}`}
-              data-autoslide={`${el.slideTime}`}
-              data-background-transition={`${el.transition}`}
-            >
-              {el.subtitle ? <InSection>{el.subtitle}</InSection> : ""}
-            </Section>
-          ))}
+          {videoData.map((el, idx) =>
+            el.background.type === "image" ? (
+              <Section
+                key={idx}
+                data-background-image={`${el.background.src}`}
+                data-transition={`${el.transition}`}
+                data-autoslide={`${el.slideTime}`}
+                data-background-transition={`${el.transition}`}
+              >
+                {el.subtitle ? <InSection>{el.subtitle}</InSection> : ""}
+              </Section>
+            ) : (
+              <Section
+                key={idx}
+                data-background-video={`${el.background.src}`}
+                data-transition={`${el.transition}`}
+                data-autoslide={`${el.slideTime}`}
+                data-background-transition={`${el.transition}`}
+              >
+                {el.subtitle ? <InSection>{el.subtitle}</InSection> : ""}
+              </Section>
+            )
+          )}
           <Section>슬라이드쇼가 끝났습니다.</Section>
         </div>
       </RevealContainer>

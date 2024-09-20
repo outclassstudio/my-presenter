@@ -28,7 +28,8 @@ export default function Home() {
     const files = e.target.files;
 
     for (let i = 0; i < files.length; i++) {
-      const background = URL.createObjectURL(files[i]);
+      const type = files[i].type.split("/")[0];
+      const src = URL.createObjectURL(files[i]);
       let id = i;
       if (videoData.length) {
         const [last] = videoData.slice(-1);
@@ -37,7 +38,10 @@ export default function Home() {
       }
       const data = {
         id,
-        background,
+        background: {
+          type,
+          src,
+        },
         transition: "none",
         slideTime: 5000,
         subtitle: "",
@@ -100,7 +104,7 @@ export default function Home() {
           <div className="title">📺추가된 파일: {videoData.length}개</div>
           <PreloadWrapper>
             {videoData.map((data) => (
-              <SequenceImage key={data.id} src={data.background} />
+              <SequenceImage key={data.id} data={data.background} />
             ))}
           </PreloadWrapper>
           <div className="expected">

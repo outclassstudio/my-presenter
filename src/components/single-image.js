@@ -45,7 +45,11 @@ export default function SingleImage({ data }) {
 
   return (
     <SingleImageContainer>
-      <Thumbnail src={background} />
+      {background.type === "image" ? (
+        <ThumbnailImage src={background.src} />
+      ) : (
+        <ThumbnailVideo src={background.src} />
+      )}
       <SelectWrapper>
         <span>전환효과</span>
         <select onChange={handleTransitionChange}>
@@ -115,7 +119,12 @@ const SingleImageContainer = styled.div`
   }
 `;
 
-const Thumbnail = styled.img`
+const ThumbnailImage = styled.img`
+  width: 100%;
+  aspect-ratio: 16/9;
+`;
+
+const ThumbnailVideo = styled.video`
   width: 100%;
   aspect-ratio: 16/9;
 `;
