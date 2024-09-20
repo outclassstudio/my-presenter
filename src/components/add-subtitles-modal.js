@@ -47,9 +47,13 @@ export default function AddSubtitlesModal({ handleModalOpen }) {
           <>
             <PreviewWrapper>
               <SlideWrapper>
-                {videoData.map((data, idx) => (
-                  <img key={idx} src={data.background} />
-                ))}
+                {videoData.map((data, idx) =>
+                  data.background.type === "image" ? (
+                    <img key={idx} src={data.background.src} />
+                  ) : (
+                    <video key={idx} src={data.background.src} />
+                  )
+                )}
               </SlideWrapper>
               <SubArrayWrapper>
                 {subArray.slice(0, videoData.length).map((sub, idx) => (
@@ -177,6 +181,11 @@ const SlideWrapper = styled.div`
   gap: 10px;
 
   img {
+    width: 64px;
+    height: 36px;
+  }
+
+  video {
     width: 64px;
     height: 36px;
   }
