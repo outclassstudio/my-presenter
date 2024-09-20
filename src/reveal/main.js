@@ -34,7 +34,7 @@ export default function Main() {
     if (deckRef.current) return;
 
     deckRef.current = new Reveal(deckDivRef.current, {
-      transition: "slide",
+      transition: "none",
       embedded: false,
       autoSlide: 5000,
     });
@@ -59,6 +59,7 @@ export default function Main() {
     <MainContainer>
       <RevealContainer className="reveal" ref={deckDivRef}>
         <div className="slides">
+          <Section data-autoslide="4500">슬라이드쇼가 시작됩니다.</Section>
           {videoData.map((el, idx) => (
             <Section
               key={idx}
@@ -67,7 +68,7 @@ export default function Main() {
               data-autoslide={`${el.slideTime}`}
               data-background-transition={`${el.transition}`}
             >
-              <InSection>{el.subtitle}</InSection>
+              {el.subtitle ? <InSection>{el.subtitle}</InSection> : ""}
             </Section>
           ))}
           <Section>슬라이드쇼가 끝났습니다.</Section>

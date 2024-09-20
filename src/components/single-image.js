@@ -1,15 +1,20 @@
 import styled from "styled-components";
 import { transitions } from "../lib/options";
 import useDataStore from "../data/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DefaultButton } from "../style/button-style";
 
 export default function SingleImage({ data }) {
   const [background, setBackground] = useState(data.background);
   const [transition, setTranstion] = useState(data.transition);
   const [slideTime, setSlideTime] = useState(data.slideTime);
-  const [subtitle, setSubtitle] = useState("");
+  const [subtitle, setSubtitle] = useState(data.subtitle);
   const { updateArray, deleteArray } = useDataStore();
+
+  //todo 자막 업데이트...
+  useEffect(() => {
+    setSubtitle(data.subtitle);
+  }, [data.subtitle]);
 
   const handleUpdate = () => {
     const updataData = {
@@ -66,6 +71,8 @@ export default function SingleImage({ data }) {
           width={"50px"}
           height={"30px"}
           background={"#363636"}
+          hover={"#575757"}
+          active={"#7a7a7a"}
           onClick={handleUpdate}
         >
           수정
@@ -74,6 +81,8 @@ export default function SingleImage({ data }) {
           width={"50px"}
           height={"30px"}
           background={"#bf192c"}
+          hover={"#c43747"}
+          active={"#c24f5c"}
           onClick={handleDelete}
         >
           삭제
