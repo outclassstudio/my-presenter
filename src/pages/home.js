@@ -5,8 +5,9 @@ import useDataStore from "../data/store";
 import { DefaultButton } from "../style/button-style";
 import SequenceImage from "../components/sequence-image";
 import AddSubtitlesModal from "../components/add-subtitles-modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatToMin } from "../lib/utils";
+import idb from "../apis/idb";
 
 export default function Home() {
   const [isSubtitleModalOpen, setIsSubtitleModalOpen] = useState(false);
@@ -19,6 +20,14 @@ export default function Home() {
     }
   }
   // console.log(videoData);
+
+  useEffect(() => {
+    idb.getData().then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        addArray(data[i]);
+      }
+    });
+  }, []);
 
   const handlePresentOn = () => {
     navigate("/reveal");
@@ -47,6 +56,7 @@ export default function Home() {
         subtitle: "",
       };
       addArray(data);
+      idb.addData(data);
     }
   };
 
