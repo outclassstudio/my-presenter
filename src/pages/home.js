@@ -7,6 +7,7 @@ import SequenceImage from "../components/sequence-image";
 import AddSubtitlesModal from "../components/add-subtitles-modal";
 import { useState } from "react";
 import { formatToMin } from "../lib/utils";
+import Header from "../components/header";
 
 export default function Home() {
   const [isSubtitleModalOpen, setIsSubtitleModalOpen] = useState(false);
@@ -65,10 +66,7 @@ export default function Home() {
       ) : (
         ""
       )}
-      <Header>
-        <div className="main">Outclass</div>
-        <div className="sub">Video Generator</div>
-      </Header>
+      <Header />
       <FormWrapper>
         <div className="title">⚒️실행도구</div>
         <FileForm onSubmit={handleImageUpload}>
@@ -90,6 +88,8 @@ export default function Home() {
               height={"35px"}
               fontSize={"16px"}
               background={"#12c763"}
+              hover={"#16db6e"}
+              active={"#53e092"}
               onClick={handlePresentOn}
             >
               재생하기
@@ -132,28 +132,6 @@ const MainContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const Header = styled.div`
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  font-size: 25px;
-  font-weight: bold;
-  background-color: #242424;
-  color: white;
-  margin-bottom: 10px;
-
-  div {
-    &.main {
-    }
-    &.sub {
-      font-size: 18px;
-      color: #b8b8b8;
-    }
-  }
-`;
-
 const FormWrapper = styled.div`
   margin: 2px 20px;
   border: 1px dashed;
@@ -187,39 +165,22 @@ const FileForm = styled.form`
   gap: 10px;
 `;
 
-const AddImageButton = styled.label`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+const AddImageButton = styled(DefaultButton).attrs({ as: "label" })`
   width: 80px;
   height: 25px;
-  background: #363636;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
   padding: 5px 10px;
+  background: #363636;
   font-size: 16px;
+
+  &:hover {
+    background: #4f4e4e;
+  }
+  &:active {
+    background: #706f6f;
+  }
 `;
 
-const AddSubtitleButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 25px;
-  background: #363636;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 5px 10px;
-  font-size: 16px;
-`;
+const AddSubtitleButton = styled(AddImageButton).attrs({ as: "div" })``;
 
 const ImageInput = styled.input`
   display: none;
