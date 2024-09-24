@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { DefaultButton } from "../style/button-style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useDataStore from "../data/store";
 
 export default function AddSubtitlesModal({ handleModalOpen }) {
@@ -8,6 +8,16 @@ export default function AddSubtitlesModal({ handleModalOpen }) {
   const [previewMode, setPreviewMode] = useState(false);
   const [subArray, setSubArray] = useState([]);
   const { videoData, updateSubs } = useDataStore();
+
+  useEffect(() => {
+    const escKeyModalClose = (e) => {
+      if (e.keyCode === 27) {
+        handleModalOpen();
+      }
+    };
+    window.addEventListener("keydown", escKeyModalClose);
+    return () => window.removeEventListener("keydown", escKeyModalClose);
+  }, []);
 
   const handleSubtitleChange = (e) => {
     setSubtitle(e.target.value);

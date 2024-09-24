@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const DefaultButton = styled.button`
-  /* padding: 5px 10px; */
-  /* padding: 20px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,7 +14,6 @@ export const DefaultButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  /* font-size: 16px; */
 
   &:disabled {
     background: #949494;
